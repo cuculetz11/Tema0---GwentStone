@@ -3,18 +3,47 @@ package players;
 import cards.Deck;
 import cards.Hero;
 import cards.Minion;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
-@Getter
-@Setter
+
 public class Player {
     private Hero hero;
     private int mana;
     private Deck deck;
     private ArrayList<Minion> hand;
-    private boolean isTurn;
+
+    public Hero getHero() {
+        return hero;
+    }
+
+    public void setHero(Hero hero) {
+        this.hero = hero;
+    }
+
+
+    public ArrayList<Minion> getHand() {
+        return hand;
+    }
+
+    public void setHand(ArrayList<Minion> hand) {
+        this.hand = hand;
+    }
+
+    public Deck getDeck() {
+        return deck;
+    }
+
+    public void setDeck(Deck deck) {
+        this.deck = deck;
+    }
+
+    public int getMana() {
+        return mana;
+    }
+
+    public void setMana(int mana) {
+        this.mana = mana;
+    }
 
     public Player(Hero hero, Deck deck) {
         this.hero = hero;
@@ -23,15 +52,29 @@ public class Player {
         this.hand = new ArrayList<>();
     }
     public void drawCard() {
-        Minion cardDrawn = deck.getCards().getFirst();
-        hand.add(cardDrawn);
-        deck.getCards().removeFirst();
+        if(!this.deck.getCards().isEmpty()) {
+            Minion cardDrawn = deck.getCards().get(0);
+            hand.add(cardDrawn);
+            deck.getCards().remove(0);
+        }
     }
+
     public void incrementMana(int mana) {
-        this.mana = this.mana + mana;
-        if(this.mana > 10) {
-            this.mana = 10;
+        if(mana > 10) {
+            this.mana = this.mana + 10 ;
+        } else {
+            this.mana = mana + this.mana ;
         }
 
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "hero=" + hero +
+                ", mana=" + mana +
+                ", deck=" + deck +
+                ", hand=" + hand +
+                '}';
     }
 }

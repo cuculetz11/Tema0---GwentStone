@@ -2,11 +2,14 @@ package main;
 
 import checker.Checker;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import checker.CheckerConstants;
 import fileio.Input;
+import game.GamesController;
+import utils.JsonOutManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -68,6 +71,12 @@ public final class Main {
                 Input.class);
 
         ArrayNode output = objectMapper.createArrayNode();
+        JsonOutManager jsonOutManager = JsonOutManager.getInstance();
+        jsonOutManager.setOutput(output);
+
+        GamesController gamesController = new GamesController();
+
+        gamesController.startGames(inputData);
 
         /*
          * TODO Implement your function here
@@ -91,4 +100,5 @@ public final class Main {
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         objectWriter.writeValue(new File(filePath2), output);
     }
+
 }

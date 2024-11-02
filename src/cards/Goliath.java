@@ -1,18 +1,26 @@
 package cards;
 
+import fileio.ActionsInput;
 import fileio.CardInput;
 import utils.CardManager;
 
 public class Goliath extends Minion {
+
+    public Goliath(CardInput input) {
+        CardManager.fromInputToObject(this, input);
+        this.setAttackDamage(input.getAttackDamage());
+    }
+    @Override
+    public void useAbility(int playerIdx, ActionsInput action) {
+
+    }
+    @Override
     public boolean isTank() {
         return true;
     }
-    public Goliath(CardInput input) {
-        CardManager.tranferFromInput(this, input);
-    }
     @Override
-    public void useAbility() {
-
+    public boolean isFront() {
+        return true;
     }
 
 }

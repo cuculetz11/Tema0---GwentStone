@@ -1,20 +1,23 @@
 package utils;
 
 public class GameConstants {
+    private GameConstants() {}
     //constantele pentru numele cartilor
     public static final String DISCIPLE = "Disciple";
     public static final String GOLIATH = "Goliath";
     public static final String MIRAJ = "Miraj";
     public static final String WARDEN = "Warden";
-    public static final String THECURSEDONE = "The Cured One";
+    public static final String THECURSEDONE = "The Cursed One";
     public static final String THERIPPER = "The Ripper";
     public static final String LORDROYCE = "Lord Royce";
     public static final String EMPRESSTHORINA = "Empress Thorina";
     public static final String KINGMUDFACE = "King Mudface";
     public static final String GENERALKOCIORAW = "General Kocioraw";
+    public static final String BERSERKER = "Berserker";
+    public static final String SENTINEL = "Sentinel";
     //
     //actiuni pentru playeri
-    public static final String ENDPLAYERTURN = "EndPlayerTurn";
+    public static final String ENDPLAYERTURN = "endPlayerTurn";
     public static final String PLACECARD = "placeCard";
     public static final String CARDUSESATTACK = "cardUsesAttack";
     public static final String CARDUSESABILITY = "cardUsesAbility";
@@ -28,7 +31,7 @@ public class GameConstants {
     public static final String GETCARDSONTABLE = "getCardsOnTable";
     public static final String GETPLAYERTURN = "getPlayerTurn";
     public static final String GETPLAYERHERO = "getPlayerHero";
-    public static final String GETCARDATPOSITION = "getCardPosition";
+    public static final String GETCARDATPOSITION = "getCardAtPosition";
     public static final String GETPLAYERMANA = "getPlayerMana";
     public static final String GETFROZENCARDSONTABLE = "getFrozenCardsOnTable";
     //
@@ -37,5 +40,14 @@ public class GameConstants {
     public static final String GETPLAYERONEWINS = "getPlayerOneWins";
     public static final String GETPLAYERTWOWINS = "getPlayerTwoWins";
     //
+    // String pentru erori
+    public static final String NOTENOUGHMANATABLE = "Not enough mana to place card on table.";
+    public static final String FULLTABLE = "Cannot place card on table since row is full.";
+    public static final String NOTBELONGTOENEMY = "Attacked card does not belong to the enemy.";
+    public static final String NOTBELONGTOCURRENT = "Attacked card does not belong to the current player.";
+    public static final String ALREADYATTACKED = "Attacker card has already attacked this turn.";
+    public static final String FROZEN = "Attacker card is frozen.";
+    public static final String NOTTANK = "Attacked card is not of type 'Tank’.";
+    public static final String NOCARDATPOS = "No card available at that position.";
 
 }
