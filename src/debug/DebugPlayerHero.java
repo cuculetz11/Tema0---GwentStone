@@ -2,6 +2,7 @@ package debug;
 
 import cards.Card;
 import cards.Hero;
+import dto.CardDTO;
 
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 public class DebugPlayerHero {
     private String command;
     private int playerIdx;
-    private Card output;
+    private CardDTO output;
 
     public String getCommand() {
         return command;
@@ -19,11 +20,11 @@ public class DebugPlayerHero {
         this.command = command;
     }
 
-    public Card getOutput() {
+    public CardDTO getOutput() {
         return output;
     }
 
-    public void setOutput(Card output) {
+    public void setOutput(CardDTO output) {
         this.output = output;
     }
 
@@ -38,6 +39,6 @@ public class DebugPlayerHero {
     public DebugPlayerHero(String command, int playerIdx, Card output) {
         this.command = command;
         this.playerIdx = playerIdx;
-        this.output = output;
+        this.output = new CardDTO(output);
     }
 }

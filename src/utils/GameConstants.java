@@ -36,18 +36,28 @@ public class GameConstants {
     public static final String GETFROZENCARDSONTABLE = "getFrozenCardsOnTable";
     //
     //comenzi statistici
-    public static final String GETTOTALGAMESPLAYED = "getTotalGamePlayed";
+    public static final String GETTOTALGAMESPLAYED = "getTotalGamesPlayed";
     public static final String GETPLAYERONEWINS = "getPlayerOneWins";
     public static final String GETPLAYERTWOWINS = "getPlayerTwoWins";
     //
     // String pentru erori
     public static final String NOTENOUGHMANATABLE = "Not enough mana to place card on table.";
+    public static final String NOTENOUGHMANAHERO = "Not enough mana to use hero's ability.";
     public static final String FULLTABLE = "Cannot place card on table since row is full.";
     public static final String NOTBELONGTOENEMY = "Attacked card does not belong to the enemy.";
+    public static final String ROWNOTBELONGTOENEMY = "Selected row does not belong to the enemy.";
+    public static final String ROWNOTBELONGTOCURRENT = "Selected row does not belong to the current player.";
     public static final String NOTBELONGTOCURRENT = "Attacked card does not belong to the current player.";
     public static final String ALREADYATTACKED = "Attacker card has already attacked this turn.";
+    public static final String ALREADYATTACKEDHERO = "Hero has already attacked this turn.";
     public static final String FROZEN = "Attacker card is frozen.";
-    public static final String NOTTANK = "Attacked card is not of type 'Tank’.";
+    public static final String NOTTANK = "Attacked card is not of type 'Tank'.";
     public static final String NOCARDATPOS = "No card available at that position.";
+    //
+    // pt win
+
+    public static final String[] PLAYERWINS = {"Player one killed the enemy hero.", "Player two killed the enemy hero."};
+    //
+
 
 }

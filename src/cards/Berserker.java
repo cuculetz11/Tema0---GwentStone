@@ -1,6 +1,8 @@
 package cards;
 
+import fileio.ActionsInput;
 import fileio.CardInput;
+import game.Game;
 import utils.CardManager;
 
 public class Berserker extends Minion {
@@ -9,7 +11,7 @@ public class Berserker extends Minion {
         this.setAttackDamage(input.getAttackDamage());
     }
     @Override
-    public void useAbility() {
+    public void useAbility(Game game, ActionsInput action) {
 
     }
     @Override

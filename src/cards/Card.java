@@ -3,6 +3,7 @@ package cards;
 import fileio.ActionsInput;
 import fileio.CardInput;
 import fileio.Coordinates;
+import game.Game;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -74,7 +75,7 @@ public abstract class Card {
         this.description = description;
     }
 
-    public abstract void useAbility(int playerTurnIdx, ActionsInput action);
+    public abstract void useAbility(Game game, ActionsInput action);
 
     @Override
     public String toString() {

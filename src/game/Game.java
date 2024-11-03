@@ -68,8 +68,11 @@ public class Game {
     public void playing() {
         while(!gameOver) {
             playRound();
-
-            checkGameOver();
+        }
+        while(!actionsInputs.isEmpty()) {
+            ActionsInput actionsInput = actionsInputs.get(0);
+            ActionsManager.performAction(actionsInput,this);
+            actionsInputs.remove(0);
         }
     }
     public void playTurn(Player player,int playerIdxTurn) {
@@ -77,7 +80,7 @@ public class Game {
         while(!gameOver) {
             ActionsInput actionsInput = actionsInputs.get(0);
             if(!ActionsManager.performAction(actionsInput,this)) {
-                GameTable.getInstance().resetUsedCards();
+                GameTable.getInstance().resetUsedCards(this.getPlayer()[0].getHero(),this.getPlayer()[1].getHero());
                 actionsInputs.remove(0);
                 break;
             }
@@ -92,8 +95,16 @@ public class Game {
         player[1].incrementMana(roundNumber);
         player[0].drawCard();
         player[1].drawCard();
+        GameTable.getInstance().unFreezeRows((firstPlayerIdx+1) % 2);
         playTurn(player[this.firstPlayerIdx],firstPlayerIdx);
+        if(gameOver) {
+            return;
+        }
+        GameTable.getInstance().unFreezeRows(firstPlayerIdx);
         playTurn(player[(this.firstPlayerIdx + 1) % 2],(firstPlayerIdx+1) % 2);
+        if(gameOver) {
+            return;
+        }
         this.roundNumber++;
 
     }
@@ -101,12 +112,14 @@ public class Game {
         if(actionsInputs.isEmpty()) {
             gameOver = true;
         }
-        if(player[0].getHero().getHealth() == 0) {
-            GamesController.incrementPlayerTwoScore();
+        if(player[0].getHero().getHealth() <= 0) {
+            GamesController.getInstance().incrementPlayerTwoScore();
+            player[1].wins(1);
             gameOver = true;
         }
-        if(player[1].getHero().getHealth() == 0) {
-            GamesController.incrementPlayerOneScore();
+        if(player[1].getHero().getHealth() <= 0) {
+            GamesController.getInstance().incrementPlayerOneScore();
+            player[0].wins(0);
             gameOver = true;
         }
     }

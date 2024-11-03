@@ -74,28 +74,9 @@ public final class Main {
         JsonOutManager jsonOutManager = JsonOutManager.getInstance();
         jsonOutManager.setOutput(output);
 
-        GamesController gamesController = new GamesController();
+        GamesController gamesController = GamesController.getInstance();
 
         gamesController.startGames(inputData);
-
-        /*
-         * TODO Implement your function here
-         *
-         * How to add output to the output array?
-         * There are multiple ways to do this, here is one example:
-         *
-         * ObjectMapper mapper = new ObjectMapper();
-         *
-         * ObjectNode objectNode = mapper.createObjectNode();
-         * objectNode.put("field_name", "field_value");
-         *
-         * ArrayNode arrayNode = mapper.createArrayNode();
-         * arrayNode.add(objectNode);
-         *
-         * output.add(arrayNode);
-         * output.add(objectNode);
-         *
-         */
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         objectWriter.writeValue(new File(filePath2), output);

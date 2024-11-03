@@ -3,6 +3,9 @@ package players;
 import cards.Deck;
 import cards.Hero;
 import cards.Minion;
+import utils.GameConstants;
+import utils.GameEnded;
+import utils.JsonOutManager;
 
 import java.util.ArrayList;
 
@@ -66,6 +69,10 @@ public class Player {
             this.mana = mana + this.mana ;
         }
 
+    }
+    public void wins(int playerIdx) {
+        GameEnded gameEnded = new GameEnded(GameConstants.PLAYERWINS[playerIdx]);
+        JsonOutManager.getInstance().addToOutput(gameEnded);
     }
 
     @Override

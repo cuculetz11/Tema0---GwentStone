@@ -2,28 +2,48 @@ package game;
 
 import fileio.GameInput;
 import fileio.Input;
+import utils.GameConstants;
 
 
 public class GamesController {
+    private static GamesController instance;
     private int numberGames;
-    private static int PlayerOneScore;
-    private static int PlayerTwoScore;
+    private int PlayerOneScore;
+    private int PlayerTwoScore;
 
-    public static void incrementPlayerOneScore() {
+    public int getPlayerTwoScore() {
+        return PlayerTwoScore;
+    }
+
+    public int getPlayerOneScore() {
+        return PlayerOneScore;
+    }
+
+    public int getNumberGames() {
+        return numberGames;
+    }
+    public void incrementPlayerOneScore() {
         PlayerOneScore++;
     }
-    public static void incrementPlayerTwoScore() {
+    public void incrementPlayerTwoScore() {
         PlayerTwoScore++;
     }
-
     public void startGames(Input input) {
         numberGames = 0;
-        GamesController.PlayerOneScore = 0;
-        GamesController.PlayerTwoScore = 0;
+        PlayerOneScore = 0;
+        PlayerTwoScore = 0;
         for(GameInput game : input.getGames()) {
             GameTable.getInstance().resetTable();
-            Game g = new Game(game,input.getPlayerOneDecks(),input.getPlayerTwoDecks());
             numberGames++;
+            Game g = new Game(game,input.getPlayerOneDecks(),input.getPlayerTwoDecks());
         }
+    }
+    private GamesController() {
+    }
+    public static GamesController getInstance() {
+        if(instance == null) {
+            instance = new GamesController();
+        }
+        return instance;
     }
 }

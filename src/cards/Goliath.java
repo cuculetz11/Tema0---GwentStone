@@ -2,6 +2,7 @@ package cards;
 
 import fileio.ActionsInput;
 import fileio.CardInput;
+import game.Game;
 import utils.CardManager;
 
 public class Goliath extends Minion {
@@ -11,7 +12,7 @@ public class Goliath extends Minion {
         this.setAttackDamage(input.getAttackDamage());
     }
     @Override
-    public void useAbility(int playerIdx, ActionsInput action) {
+    public void useAbility(Game game, ActionsInput action) {
 
     }
     @Override

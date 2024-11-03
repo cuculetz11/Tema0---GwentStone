@@ -1,5 +1,6 @@
 package dto;
 
+import cards.Card;
 import cards.Minion;
 
 import java.util.ArrayList;
@@ -11,12 +12,12 @@ public class CardDTO {
     private ArrayList<String> colors;
     private String name;
 
-    public CardDTO(Minion minion) {
-        this.mana = minion.getMana();
-        this.health = minion.getHealth();
-        this.description = minion.getDescription();
-        this.colors = minion.getColors();
-        this.name = minion.getName();
+    public CardDTO(Card card) {
+        this.mana = card.getMana();
+        this.health = card.getHealth();
+        this.description = card.getDescription();
+        this.colors = card.getColors();
+        this.name = card.getName();
     }
 
     public int getMana() {

@@ -1,5 +1,6 @@
 package game;
 
+import cards.Hero;
 import cards.Minion;
 import fileio.Coordinates;
 
@@ -28,7 +29,15 @@ public class GameTable {
     public void setPlayerBackRow(ArrayList<Minion>[] playerBackRow) {
         this.playerBackRow = playerBackRow;
     }
-    public void resetUsedCards() {
+    public void unFreezeRows(int playerIdx) {
+        for(Minion m : playerFrontRow[playerIdx]) {
+            m.setFrozen(false);
+        }
+        for(Minion m : playerBackRow[playerIdx]) {
+            m.setFrozen(false);
+        }
+    }
+    public void resetUsedCards(Hero p1, Hero p2) {
         for (int i = 0; i < playerBackRow.length; i++) {
             for(Minion m : playerBackRow[i]) {
                 m.setWasUsed(false);
@@ -37,6 +46,8 @@ public class GameTable {
                 m.setWasUsed(false);
             }
         }
+        p1.setWasUsed(false);
+        p2.setWasUsed(false);
     }
     public  Minion getCardTable(int X,int Y) {
         if(X == 0) {
@@ -89,13 +100,14 @@ public class GameTable {
         return null;
     }
 
-    public Minion getTank(int playerIdx) {
-        for(Minion m : playerFrontRow[playerIdx]) {
-            if(m.isTank()) {
-                return m;
-            }
-        }
-        return null;
+    public boolean isThereATank(int playerIdx) {
+
+       for(Minion m : playerFrontRow[playerIdx]) {
+           if(m.isTank()) {
+               return true;
+           }
+       }
+        return false;
     }
     private GameTable() {
         playerBackRow[0] = new ArrayList<>();

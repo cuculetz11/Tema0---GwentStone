@@ -1,6 +1,8 @@
 package cards;
 
+import fileio.ActionsInput;
 import fileio.CardInput;
+import game.Game;
 import utils.CardManager;
 
 public class Sentinel extends Minion{
@@ -10,7 +12,7 @@ public class Sentinel extends Minion{
     }
 
     @Override
-    public void useAbility() {
+    public void useAbility(Game game, ActionsInput action) {
 
     }
     @Override

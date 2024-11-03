@@ -3,6 +3,7 @@ package cards;
 import errorAction.ErrorCardAttack;
 import fileio.ActionsInput;
 import fileio.CardInput;
+import game.Game;
 import game.GameTable;
 import utils.ActionsManager;
 import utils.CardManager;
@@ -17,9 +18,9 @@ public class Disciple extends Minion{
     }
 
     @Override
-    public void useAbility(int playerIdx, ActionsInput action) {
-        if(ActionsManager.isEnemyCard(playerIdx,action.getCardAttacked().getX())) {
-            ErrorCardAttack stats = new ErrorCardAttack(GameConstants.CARDUSESABILITY,GameConstants.NOTBELONGTOENEMY,action.getCardAttacker(),action.getCardAttacked());
+    public void useAbility(Game game, ActionsInput action) {
+        if(ActionsManager.isEnemyCard(game.getPlayerIdxTurn(), action.getCardAttacked().getX())) {
+            ErrorCardAttack stats = new ErrorCardAttack(GameConstants.CARDUSESABILITY,GameConstants.NOTBELONGTOCURRENT,action.getCardAttacker(),action.getCardAttacked());
             JsonOutManager.getInstance().addToOutput(stats);
             return;
         }

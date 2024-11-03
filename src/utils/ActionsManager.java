@@ -1,12 +1,18 @@
 package utils;
 
+import Statistics.StatsOut;
+import cards.Hero;
 import cards.Minion;
 import debug.*;
+import errorAction.ErrorAttackHero;
 import errorAction.ErrorCardAttack;
 import errorAction.ErrorCardTable;
+import errorAction.ErrorHeroAbility;
 import fileio.ActionsInput;
+import fileio.Coordinates;
 import game.Game;
 import game.GameTable;
+import game.GamesController;
 import players.Player;
 
 import java.util.ArrayList;
@@ -35,31 +41,72 @@ public class ActionsManager {
         } else if(action.getCommand().equals(GameConstants.GETCARDATPOSITION)) {
             getPlayerAtPosition(action);
         } else if(action.getCommand().equals(GameConstants.CARDUSESABILITY)) {
-            cardUseAbility
+            cardUseAbility(action,game);
+        } else if(action.getCommand().equals(GameConstants.USEATTACKHERO)) {
+            useAttackHero(game,action);
+        } else if(action.getCommand().equals(GameConstants.USEHEROABILITY)) {
+            useHeroAbility(game,action);
+        } else if(action.getCommand().equals(GameConstants.GETFROZENCARDSONTABLE)) {
+            getFrozenCards();
+        } else if(action.getCommand().equals(GameConstants.GETTOTALGAMESPLAYED)) {
+            getTotalGamesPlayed();
+        } else if(action.getCommand().equals(GameConstants.GETPLAYERONEWINS)) {
+            getPlayerOneWins();
+        } else if(action.getCommand().equals(GameConstants.GETPLAYERTWOWINS)) {
+            getPlayerTwoWins();
         }
         //REFA OOP-
 
         return true;
     }
+
     public static boolean isEnemyCard(int playerIdx, int attackedRowIdx) {
-      return  (playerIdx == 0 && (attackedRowIdx == 0 || attackedRowIdx == 1)) ||
+        return  (playerIdx == 0 && (attackedRowIdx == 0 || attackedRowIdx == 1)) ||
                 (playerIdx == 1 && (attackedRowIdx == 2 || attackedRowIdx == 3));
-        }
-//    public static boolean isMyOwnCard(int playerIdx, int attackedRowIdx) {
-//        return  (playerIdx == 0 && (attackedRowIdx == 2 || attackedRowIdx == 3)) ||
-//                (playerIdx == 1 && (attackedRowIdx == 0 || attackedRowIdx == 1));
-//    }
-    private static void getPlayerAtPosition(ActionsInput action) {
-    int X = action.getX();
-    int Y = action.getY();
-    Minion card = GameTable.getInstance().getCardTable(X,Y);
-    if(card == null) {
-        DebugCardAtPositionErr stats = new DebugCardAtPositionErr(GameConstants.GETCARDATPOSITION,X,Y,GameConstants.NOCARDATPOS);
-        JsonOutManager.getInstance().addToOutput(stats);
-    } else {
-        DebugCardAtPosition stats = new DebugCardAtPosition(GameConstants.GETCARDATPOSITION,X,Y,card);
+    }
+
+    private static void getTotalGamesPlayed() {
+        StatsOut stats = new StatsOut(GameConstants.GETTOTALGAMESPLAYED, GamesController.getInstance().getNumberGames());
         JsonOutManager.getInstance().addToOutput(stats);
     }
+    private static void getPlayerOneWins() {
+        StatsOut stats = new StatsOut(GameConstants.GETPLAYERONEWINS, GamesController.getInstance().getPlayerOneScore());
+        JsonOutManager.getInstance().addToOutput(stats);
+    }
+    private static void getPlayerTwoWins() {
+        StatsOut stats = new StatsOut(GameConstants.GETPLAYERTWOWINS, GamesController.getInstance().getPlayerTwoScore());
+        JsonOutManager.getInstance().addToOutput(stats);
+    }
+    private static void getPlayerAtPosition(ActionsInput action) {
+        int X = action.getX();
+        int Y = action.getY();
+        Minion card = GameTable.getInstance().getCardTable(X,Y);
+        if(card == null) {
+            DebugCardAtPositionErr stats = new DebugCardAtPositionErr(GameConstants.GETCARDATPOSITION,X,Y,GameConstants.NOCARDATPOS);
+            JsonOutManager.getInstance().addToOutput(stats);
+        } else {
+            DebugCardAtPosition stats = new DebugCardAtPosition(GameConstants.GETCARDATPOSITION,X,Y,card);
+            JsonOutManager.getInstance().addToOutput(stats);
+        }
+    }
+    private static void getFrozenCards() {
+        ArrayList<Minion> frozenMinions = new ArrayList<>();
+        ArrayList<Minion>[] playerBackRow = GameTable.getInstance().getPlayerBackRow();
+        ArrayList<Minion>[] playerFrontRow = GameTable.getInstance().getPlayerFrontRow();
+        ArrayList<Minion>[] allTable = new ArrayList[4];
+        allTable[0] = playerBackRow[1];
+        allTable[1] = playerFrontRow[1];
+        allTable[2] = playerFrontRow[0];
+        allTable[3] = playerBackRow[0];
+        for(int i = 0 ; i < 4 ; i++) {
+            for(Minion minion : allTable[i]) {
+                if(minion.isFrozen()) {
+                    frozenMinions.add(minion);
+                }
+            }
+        }
+        DebugFrozenCards stats = new DebugFrozenCards(GameConstants.GETFROZENCARDSONTABLE,frozenMinions);
+        JsonOutManager.getInstance().addToOutput(stats);
     }
     private static void getplayermana(Game game, int playerIdx) {
         DebugPlayerMana stats = new DebugPlayerMana(GameConstants.GETPLAYERMANA,playerIdx,game.getPlayer()[playerIdx - 1].getMana());
@@ -76,10 +123,6 @@ public class ActionsManager {
     private static void showCardsTable() {
         ArrayList<Minion>[] playerBackRow = GameTable.getInstance().getPlayerBackRow();
         ArrayList<Minion>[] playerFrontRow = GameTable.getInstance().getPlayerFrontRow();
-//        allTable.addAll(playerFrontRow[0]);
-//        allTable.addAll(playerBackRow[0]);
-//        allTable.addAll(playerFrontRow[1]);
-//        allTable.addAll(playerBackRow[1]);
         ArrayList<Minion>[] allTable = new ArrayList[4];
         allTable[0] = playerBackRow[1];
         allTable[1] = playerFrontRow[1];
@@ -111,9 +154,47 @@ public class ActionsManager {
             JsonOutManager.getInstance().addToOutput(stats);
             return;
         }
-        attacker.useAbility(game.getFirstPlayerIdx(), action.getCardAttacker());
+        attacker.useAbility(game, action);
     }
 
+    private static void useHeroAbility(Game game, ActionsInput action) {
+        Hero hero = game.getPlayer()[game.getPlayerIdxTurn()].getHero();
+        if(hero.getMana() > game.getPlayer()[game.getPlayerIdxTurn()].getMana()) {
+            ErrorHeroAbility err = new ErrorHeroAbility(GameConstants.NOTENOUGHMANAHERO,GameConstants.USEHEROABILITY, action.getAffectedRow());
+            JsonOutManager.getInstance().addToOutput(err);
+            return;
+        }
+        if(hero.isWasUsed()) {
+            ErrorHeroAbility err = new ErrorHeroAbility(GameConstants.ALREADYATTACKEDHERO,GameConstants.USEHEROABILITY, action.getAffectedRow());
+            JsonOutManager.getInstance().addToOutput(err);
+            return;
+        }
+        hero.useAbility(game, action);
+
+    }
+    private static void useAttackHero(Game game, ActionsInput action) {
+        Minion attacker = GameTable.getInstance().getCardTable(action.getCardAttacker().getX(),action.getCardAttacker().getY());
+        if(attacker.isFrozen()) {
+            ErrorAttackHero err = new ErrorAttackHero(GameConstants.FROZEN,GameConstants.USEATTACKHERO,action.getCardAttacker());
+            JsonOutManager.getInstance().addToOutput(err);
+            return;
+        }
+        if(attacker.isWasUsed()) {
+            ErrorAttackHero err = new ErrorAttackHero(GameConstants.ALREADYATTACKED,GameConstants.USEATTACKHERO,action.getCardAttacker());
+            JsonOutManager.getInstance().addToOutput(err);
+            return;
+        }
+
+        if(GameTable.getInstance().isThereATank(((game.getPlayerIdxTurn()) + 1) % 2)) {
+            ErrorAttackHero err = new ErrorAttackHero(GameConstants.NOTTANK,GameConstants.USEATTACKHERO,action.getCardAttacker());
+            JsonOutManager.getInstance().addToOutput(err);
+            return;
+        }
+        attacker.setWasUsed(true);
+        Hero enemyHero = game.getPlayer()[(game.getPlayerIdxTurn() + 1) % 2].getHero();
+        enemyHero.setHealth(enemyHero.getHealth() - attacker.getAttackDamage());
+
+    }
     private static void cardUsesAttack(Game game, ActionsInput action) {
         int playerIdx = game.getPlayerIdxTurn();
         int attackedRowIdx = action.getCardAttacked().getX();
@@ -133,20 +214,17 @@ public class ActionsManager {
             JsonOutManager.getInstance().addToOutput(stats);
             return;
         }
-        if(attacked.isFrozen()) {
+        if(attacker.isFrozen()) {
             ErrorCardAttack stats = new ErrorCardAttack(GameConstants.CARDUSESATTACK,GameConstants.FROZEN,action.getCardAttacker(),action.getCardAttacked());
             JsonOutManager.getInstance().addToOutput(stats);
             return;
         }
-        Minion firstTank = GameTable.getInstance().getTank((playerIdx + 1) % 2);
-//        if(firstTank == null) {
-//            ErrorCardAttack stats = new ErrorCardAttack(GameConstants.CARDUSESATTACK,GameConstants.NOTTANK,action.getCardAttacker(),action.getCardAttacked());
-//            JsonOutManager.getInstance().addToOutput(stats);
-//            return;
-//        }
-        if(firstTank != null) {
-            if(attacked.isTank() == false)
-                attacked = firstTank;
+
+
+        if(!attacked.isTank() && GameTable.getInstance().isThereATank(((game.getPlayerIdxTurn()) + 1) % 2)) {
+            ErrorCardAttack stats = new ErrorCardAttack(GameConstants.CARDUSESATTACK,GameConstants.NOTTANK,action.getCardAttacker(),action.getCardAttacked());
+            JsonOutManager.getInstance().addToOutput(stats);
+            return;
         }
         attacker.setWasUsed(true);
         attacked.setHealth(attacked.getHealth() - attacker.getAttackDamage());
