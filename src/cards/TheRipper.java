@@ -34,7 +34,10 @@ public class TheRipper extends Minion {
         }
         this.setWasUsed(true);
     }
-
+    /**
+     * Ne spune daca cartea este pe randul din fata al playerului
+     * @return true daca e; false altfel
+     */
     @Override
     public boolean isFront() {
         return true;

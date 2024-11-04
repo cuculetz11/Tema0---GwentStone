@@ -32,7 +32,7 @@ public class Deck {
     }
 
     /**
-     *
+     * Obtinem cartile din deck
      * @return
      */
     public ArrayList<Minion> getCards() {

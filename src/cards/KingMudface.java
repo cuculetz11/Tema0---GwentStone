@@ -12,15 +12,18 @@ import utils.GameConstants;
 import java.util.ArrayList;
 
 public class KingMudface extends Hero {
-    /**
-     * Constructor pentu acest tip de rege
-     * @param input cartea input ce e exxact acest rege
-     */
     public KingMudface(final CardInput input) {
         CardManager.fromInputToObject(this, input);
         this.setHealth(GameConstants.MAXHEALTHHERO);
     }
-
+    /**
+     * Aceasta metoda este suprascrisa de fiecare carte in parte
+     * acest polimorfism ma ajuta sa nu rescriu pentru ficare carte un cod asemanator
+     *
+     * @param game reprezinta jocul in sine deoarce am nevoie de anumite atribute din acel obiect
+     * @param action in special pentru input si pentru datele de afisare
+     * @param error aici ma ocup de erorile ce pot aparea si le pun in out
+     */
     @Override
     public void useAbility(final Game game, final ActionsInput action, final ErrorManger error) {
        if (error.handleAbilityHeroEnemyCheck(action, game.getPlayerIdxTurn())) {

@@ -18,8 +18,9 @@ public class Sentinel extends Minion {
     }
 
     /**
+     * Ne arata daca cartea este de tipul 'Tank'
      *
-     * @return
+     * @return true daca cartea e tank; false altfel
      */
     @Override
     public boolean isTank() {
@@ -27,8 +28,8 @@ public class Sentinel extends Minion {
     }
 
     /**
-     *
-     * @return
+     * Ne spune daca cartea este pe randul din fata al playerului
+     * @return true daca e; false altfel
      */
     @Override
     public boolean isFront() {

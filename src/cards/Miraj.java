@@ -17,6 +17,8 @@ public class Miraj extends Minion {
     }
 
     /**
+     * Aceasta metoda este suprascrisa de fiecare carte in parte
+     * acest polimorfism ma ajuta sa nu rescriu pentru ficare carte un cod asemanator
      *
      * @param game reprezinta jocul in sine deoarce am nevoie de anumite atribute din acel obiect
      * @param action in special pentru input si pentru datele de afisare
@@ -36,8 +38,9 @@ public class Miraj extends Minion {
     }
 
     /**
+     * Ne arata daca cartea este de tipul 'Tank'
      *
-     * @return
+     * @return true daca cartea e tank; false altfel
      */
     @Override
     public boolean isTank() {
@@ -45,8 +48,8 @@ public class Miraj extends Minion {
     }
 
     /**
-     *
-     * @return
+     * Ne spune daca cartea este pe randul din fata al playerului
+     * @return true daca e; false altfel
      */
     @Override
     public boolean isFront() {
