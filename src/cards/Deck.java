@@ -1,36 +1,41 @@
 package cards;
 
 import fileio.CardInput;
-import lombok.Getter;
-import lombok.Setter;
 import utils.CardManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 
 public class Deck {
     private ArrayList<Minion> cards;
+    private CardManager cardManager;
 
-    public ArrayList<Minion> getCards() {
-        return cards;
-    }
-
-    public void setCards(ArrayList<Minion> cards) {
-        this.cards = cards;
-    }
-
-    public Deck(ArrayList<CardInput> cardsInput) {
+    public Deck(final ArrayList<CardInput> cardsInput) {
+        this.cardManager = new CardManager();
         this.cards = new ArrayList<>();
-        for(CardInput card : cardsInput) {
-            Minion playerCard = CardManager.getMinion(card);
+        for (CardInput card : cardsInput) {
+            Minion playerCard = cardManager.getMinion(card);
             cards.add(playerCard);
         }
     }
 
-    @Override
-    public String toString() {
-        return "Deck{" +
-                "cards=" + cards +
-                '}';
+    /**
+     * Aceasta metoda amesteca deck-ul
+     * @param shuffleSeed - reprezinta seed-ul dat in input ce ma ajuta sa fac o amestecare
+     *                   controlata
+     */
+    public void shuffle(final int shuffleSeed) {
+        Random rand = new Random(shuffleSeed);
+        Collections.shuffle(this.cards, rand);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ArrayList<Minion> getCards() {
+        return cards;
     }
 }

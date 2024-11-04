@@ -6,27 +6,40 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
 /**
- * o fac singleton ca sa mi fie lejer sa accesez mereu acest ArrayNode in care pun output ul
+ * Clasa JsonOutManager este un singleton care gestioneaza un ArrayNode pentru a stoca output-ul
  */
-public class JsonOutManager {
+public final class JsonOutManager {
     private static JsonOutManager instance = null;
     private ArrayNode output;
 
-    private JsonOutManager() {}
+    private JsonOutManager() {
+    }
 
+    /**
+     * Obtine instanta singleton a clasei JsonOutManager
+     *
+     * @return instanta unica a JsonOutManager
+     */
     public static JsonOutManager getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new JsonOutManager();
         }
         return instance;
     }
-    public void setOutput(ArrayNode output) {
-        this.output = output;
-    }
+
     public ArrayNode getOutput() {
         return output;
     }
-    public void addToOutput(Object object) {
+
+    public void setOutput(final ArrayNode output) {
+        this.output = output;
+    }
+
+    /**
+     * Prin aceasta metoda adug direct obictul ce vreau sa-l pun in output
+     * @param object obiectul de adugat la output
+     */
+    public void addToOutput(final Object object) {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode out = mapper.valueToTree(object);
         output.add(out);

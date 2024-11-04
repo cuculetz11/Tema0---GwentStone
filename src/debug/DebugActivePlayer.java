@@ -1,30 +1,48 @@
 package debug;
 
-import lombok.Getter;
-import lombok.Setter;
-
-
 public class DebugActivePlayer {
     private String command;
     private int output;
-    public DebugActivePlayer(String command, int output) {
+
+    public DebugActivePlayer(final String command, final int output) {
         this.command = command;
         this.output = output;
     }
 
+    /**
+     * Obtine comanda
+     *
+     * @return comanda ca un string.
+     */
     public String getCommand() {
         return command;
     }
 
-    public void setCommand(String command) {
+    /**
+     * Seteaza comanda
+     *
+     * @param command comanda de setat
+     */
+    public void setCommand(final String command) {
         this.command = command;
     }
 
+    /**
+     * Obtine playerul ce inca e in tura lui
+     *
+     * @return iesirea ca un int
+     */
     public int getOutput() {
         return output;
     }
 
-    public void setOutput(int output) {
+    /**
+     * Seteaza iesirea asociata cu comanda
+     *
+     * @param output iesirea de setat
+     *
+     */
+    public void setOutput(final int output) {
         this.output = output;
     }
 }

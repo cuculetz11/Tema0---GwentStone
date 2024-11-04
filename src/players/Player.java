@@ -15,73 +15,90 @@ public class Player {
     private Deck deck;
     private ArrayList<Minion> hand;
 
-    public Hero getHero() {
-        return hero;
-    }
-
-    public void setHero(Hero hero) {
-        this.hero = hero;
-    }
-
-
-    public ArrayList<Minion> getHand() {
-        return hand;
-    }
-
-    public void setHand(ArrayList<Minion> hand) {
-        this.hand = hand;
-    }
-
-    public Deck getDeck() {
-        return deck;
-    }
-
-    public void setDeck(Deck deck) {
-        this.deck = deck;
-    }
-
-    public int getMana() {
-        return mana;
-    }
-
-    public void setMana(int mana) {
-        this.mana = mana;
-    }
-
-    public Player(Hero hero, Deck deck) {
+    public Player(final Hero hero, final Deck deck) {
         this.hero = hero;
         this.deck = deck;
         this.mana = 0;
         this.hand = new ArrayList<>();
     }
+
+    /**
+     * Obtine eroul jucatorului
+     * @return eroul jucatorului
+     */
+    public Hero getHero() {
+        return hero;
+    }
+
+    /**
+     * Seteaza eroul jucatorului
+     * @param hero noul erou al jucatorului
+     */
+    public void setHero(final Hero hero) {
+        this.hero = hero;
+    }
+
+    /**
+     * Obtine mana curenta a jucatorului
+     * @return mana curenta a jucatorului
+     */
+    public ArrayList<Minion> getHand() {
+        return hand;
+    }
+
+    /**
+     * Obtine pachetul de carti al jucatorului
+     * @return pachetul de carti al jucatorului
+     */
+    public Deck getDeck() {
+        return deck;
+    }
+
+    /**
+     * Obtine mana curenta a jucatorului
+     * @return mana curenta a jucatorului
+     */
+    public int getMana() {
+        return mana;
+    }
+
+    /**
+     * Seteaza mana jucatorului
+     * @param mana noua mana a jucatorului
+     */
+    public void setMana(final int mana) {
+        this.mana = mana;
+    }
+
+    /**
+     * Jucatorul trage o carte din pachet si o adauga in mana
+     */
     public void drawCard() {
-        if(!this.deck.getCards().isEmpty()) {
+        if (!this.deck.getCards().isEmpty()) {
             Minion cardDrawn = deck.getCards().get(0);
             hand.add(cardDrawn);
             deck.getCards().remove(0);
         }
     }
 
-    public void incrementMana(int mana) {
-        if(mana > 10) {
-            this.mana = this.mana + 10 ;
+    /**
+     * Creste mana jucatorului cu o anumita valoare
+     * @param mana valoarea cu care se va creste mana
+     */
+    public void incrementMana(final int mana) {
+        if (mana > GameConstants.MAXMANA) {
+            this.mana = this.mana + GameConstants.MAXMANA;
         } else {
-            this.mana = mana + this.mana ;
+            this.mana = mana + this.mana;
         }
-
     }
-    public void wins(int playerIdx) {
+
+    /**
+     * Marcheaza jucatorul ca fiind castigator
+     * @param playerIdx indexul jucatorului care a castigat
+     */
+    public void wins(final int playerIdx) {
         GameEnded gameEnded = new GameEnded(GameConstants.PLAYERWINS[playerIdx]);
         JsonOutManager.getInstance().addToOutput(gameEnded);
-    }
-
-    @Override
-    public String toString() {
-        return "Player{" +
-                "hero=" + hero +
-                ", mana=" + mana +
-                ", deck=" + deck +
-                ", hand=" + hand +
-                '}';
     }
 }

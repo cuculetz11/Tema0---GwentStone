@@ -1,12 +1,10 @@
 package main;
 
 import checker.Checker;
-
-import com.fasterxml.jackson.databind.JsonNode;
+import checker.CheckerConstants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import checker.CheckerConstants;
 import fileio.Input;
 import game.GamesController;
 import utils.JsonOutManager;
@@ -31,6 +29,7 @@ public final class Main {
     /**
      * DO NOT MODIFY MAIN METHOD
      * Call the checker
+     *
      * @param args from command line
      * @throws IOException in case of exceptions to reading / writing
      */

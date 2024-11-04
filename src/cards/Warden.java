@@ -1,28 +1,30 @@
 package cards;
 
+import error.ErrorManger;
 import fileio.ActionsInput;
 import fileio.CardInput;
 import game.Game;
-import lombok.Getter;
-import lombok.Setter;
 import utils.CardManager;
 
 public class Warden extends Minion {
     public Warden() {
 
     }
-    public boolean isTank() {
-        return true;
-    }
-    public Warden(CardInput input) {
+
+    public Warden(final CardInput input) {
         CardManager.fromInputToObject(this, input);
         this.setAttackDamage(input.getAttackDamage());
     }
+    @Override
+    public boolean isTank() {
+        return true;
+    }
 
     @Override
-    public void useAbility(Game game, ActionsInput action){
+    public void useAbility(final Game game, final ActionsInput action, final ErrorManger error) {
 
     }
+
     @Override
     public boolean isFront() {
         return true;

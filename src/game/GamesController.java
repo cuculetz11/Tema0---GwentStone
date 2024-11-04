@@ -2,48 +2,66 @@ package game;
 
 import fileio.GameInput;
 import fileio.Input;
-import utils.GameConstants;
 
 
-public class GamesController {
+public final class GamesController {
     private static GamesController instance;
     private int numberGames;
-    private int PlayerOneScore;
-    private int PlayerTwoScore;
+    private int playerOneScore;
+    private int playerTwoScore;
+
+    private GamesController() {
+    }
+
+    /**
+     * Obtine instanta Singleton a GameController-ului
+     * @return instanta GameController
+     */
+    public static GamesController getInstance() {
+        if (instance == null) {
+            instance = new GamesController();
+        }
+        return instance;
+    }
 
     public int getPlayerTwoScore() {
-        return PlayerTwoScore;
+        return playerTwoScore;
     }
 
     public int getPlayerOneScore() {
-        return PlayerOneScore;
+        return playerOneScore;
     }
 
     public int getNumberGames() {
         return numberGames;
     }
+
+    /**
+     * Incrementeaza scorul primului jucator
+     */
     public void incrementPlayerOneScore() {
-        PlayerOneScore++;
+        playerOneScore++;
     }
+
+    /**
+     * Incrementeaza scorul celui de-al 2 lea jucator
+     */
     public void incrementPlayerTwoScore() {
-        PlayerTwoScore++;
+        playerTwoScore++;
     }
-    public void startGames(Input input) {
+
+    /**
+     * Da drumul la jocuri
+     * @param input tot inputul programului
+     */
+    public void startGames(final Input input) {
         numberGames = 0;
-        PlayerOneScore = 0;
-        PlayerTwoScore = 0;
-        for(GameInput game : input.getGames()) {
+        playerOneScore = 0;
+        playerTwoScore = 0;
+        for (GameInput game : input.getGames()) {
             GameTable.getInstance().resetTable();
             numberGames++;
-            Game g = new Game(game,input.getPlayerOneDecks(),input.getPlayerTwoDecks());
+            Game g = new Game(game, input.getPlayerOneDecks(), input.getPlayerTwoDecks());
         }
-    }
-    private GamesController() {
-    }
-    public static GamesController getInstance() {
-        if(instance == null) {
-            instance = new GamesController();
-        }
-        return instance;
     }
 }

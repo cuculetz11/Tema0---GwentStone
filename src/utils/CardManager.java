@@ -1,13 +1,32 @@
 package utils;
 
-import cards.*;
+import cards.Berserker;
+import cards.Card;
+import cards.Disciple;
+import cards.EmpressThorina;
+import cards.GeneralKocioraw;
+import cards.Goliath;
+import cards.Hero;
+import cards.KingMudface;
+import cards.LordRoyce;
+import cards.Minion;
+import cards.Miraj;
+import cards.Sentinel;
+import cards.TheCursedOne;
+import cards.TheRipper;
+import cards.Warden;
 import fileio.CardInput;
 
 /**
- * e un fel de design factory static
+ * E un fel de design factory static
  */
 public class CardManager {
-    public static Minion getMinion(CardInput card) {
+    /**
+     * Aceasta metoda preia cartea data ca input si o transforma in minionul aferent ei
+     * @param card cartea data ca input
+     * @return minionul ce reprezinta acea carte
+     */
+    public Minion getMinion(final CardInput card) {
         switch (card.getName()) {
             case GameConstants.DISCIPLE:
                 return new Disciple(card);
@@ -30,7 +49,12 @@ public class CardManager {
         }
     }
 
-    public static Hero getHero(CardInput card) {
+    /**
+     * Preia cartea de la input si ne intoarce regele aferent ei
+     * @param card cartea data ca input
+     * @return regele aferent ei
+     */
+    public Hero getHero(final CardInput card) {
         switch (card.getName()) {
             case GameConstants.LORDROYCE:
                 return new LordRoyce(card);
@@ -45,7 +69,12 @@ public class CardManager {
         }
     }
 
-    public static void fromInputToObject(Card playerCard, CardInput input) {
+    /**
+     * Transforma datele din input intr-un obiect de tip Card
+     * @param playerCard cartea ce va fi setata
+     * @param input datele de input ce vor fi folosite
+     */
+    public static void fromInputToObject(final Card playerCard, final CardInput input) {
         playerCard.setColors(input.getColors());
         playerCard.setName(input.getName());
         playerCard.setDescription(input.getDescription());

@@ -1,45 +1,42 @@
 package cards;
 
-import errorAction.ErrorHeroAbility;
+import error.ErrorManger;
 import fileio.ActionsInput;
 import fileio.CardInput;
-
 import game.Game;
 import game.GameTable;
 import players.Player;
-import utils.ActionsManager;
 import utils.CardManager;
 import utils.GameConstants;
-import utils.JsonOutManager;
 
 import java.util.ArrayList;
 
 public class EmpressThorina extends Hero {
-    public EmpressThorina(CardInput input) {
-        CardManager.fromInputToObject(this,input);
-        this.setHealth(30);
+    public EmpressThorina(final CardInput input) {
+        CardManager.fromInputToObject(this, input);
+        this.setHealth(GameConstants.MAXHEALTHHERO);
     }
+
     @Override
-    public void useAbility(Game game, ActionsInput action) {
-        if(!ActionsManager.isEnemyCard(game.getPlayerIdxTurn(),action.getAffectedRow())) {
-            ErrorHeroAbility err = new ErrorHeroAbility(GameConstants.ROWNOTBELONGTOENEMY,GameConstants.USEHEROABILITY, action.getAffectedRow());
-            JsonOutManager.getInstance().addToOutput(err);
+    public void useAbility(final Game game, final ActionsInput action, final ErrorManger error) {
+        if (error.handleSelfAbilityHero(action, game.getPlayerIdxTurn())) {
             return;
         }
         Player currPlayer = game.getPlayer()[game.getPlayerIdxTurn()];
         currPlayer.setMana(currPlayer.getMana() - this.getMana());
         this.setWasUsed(true);
-        ArrayList<Minion> attackedRow = GameTable.getInstance().getRowFromTable(action.getAffectedRow(),(game.getPlayerIdxTurn() + 1) % 2);
+        ArrayList<Minion> attackedRow = GameTable.getInstance().getRowFromTable(
+                action.getAffectedRow(), (game.getPlayerIdxTurn() + 1) % 2);
         int maxHealth = 0;
-        int Y = -1;
-        for(int i = 0 ; i < attackedRow.size() ; i++) {
+        int y = -1;
+        for (int i = 0; i < attackedRow.size(); i++) {
             Minion m = attackedRow.get(i);
-            if(m.getHealth() > maxHealth) {
+            if (m.getHealth() > maxHealth) {
                 maxHealth = m.getHealth();
-                Y = i;
+                y = i;
             }
         }
-        attackedRow.remove(Y);
+        attackedRow.remove(y);
 
 
     }
