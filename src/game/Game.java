@@ -8,13 +8,15 @@ import fileio.CardInput;
 import fileio.DecksInput;
 import fileio.GameInput;
 import players.Player;
-import utils.ActionsManager;
+import utils.ActionsController;
 import utils.CardManager;
 
 
 import java.util.ArrayList;
 
-
+/**
+ * Aceasta clasa are rolul de a initaliza un joc si de a-l desfasura
+ */
 public class Game {
     private Player[] player = new Player[2];
     private int roundNumber;
@@ -23,7 +25,7 @@ public class Game {
     private int playerIdxTurn;
     private ArrayList<ActionsInput> actionsInputs;
     private CardManager cardManager;
-    private ActionsManager actionsManager;
+    private ActionsController actionsManager;
 
     public Game(final GameInput gameInput, final DecksInput decksPlayerOne, final DecksInput
             decksPlayerTwo) {
@@ -41,7 +43,7 @@ public class Game {
     public void initializeGame(final GameInput gameInput, final DecksInput decksPlayerOne, final
     DecksInput decksPlayerTwo) {
         StartGameInput startGameInput = gameInput.getStartGame();
-        this.actionsManager = new ActionsManager();
+        this.actionsManager = new ActionsController();
         this.cardManager = new CardManager();
         this.player[0] = initalizePlayer(startGameInput.getPlayerOneDeckIdx(), decksPlayerOne,
                 startGameInput.getShuffleSeed(), startGameInput.getPlayerOneHero());
@@ -102,11 +104,10 @@ public class Game {
     /**
      * Runda curenta de joc, in care fiecare jucator are tura sa
      *
-     * @param player jucatorul care joaca tura
-     * @param playerIdxTurn indexul jucatorului care joaca tura
+     * @param playerIndxTurn indexul jucatorului care joaca tura
      */
-    public void playTurn(final Player player, final int playerIdxTurn) {
-        this.playerIdxTurn = playerIdxTurn;
+    public void playTurn(final int playerIndxTurn) {
+        this.playerIdxTurn = playerIndxTurn;
         while (!gameOver) {
             ActionsInput actionsInput = actionsInputs.get(0);
             if (!actionsManager.performAction(actionsInput, this)) {
@@ -130,12 +131,12 @@ public class Game {
         player[0].drawCard();
         player[1].drawCard();
         GameTable.getInstance().unFreezeRows((firstPlayerIdx + 1) % 2);
-        playTurn(player[this.firstPlayerIdx], firstPlayerIdx);
+        playTurn(firstPlayerIdx);
         if (gameOver) {
             return;
         }
         GameTable.getInstance().unFreezeRows(firstPlayerIdx);
-        playTurn(player[(this.firstPlayerIdx + 1) % 2], (firstPlayerIdx + 1) % 2);
+        playTurn((firstPlayerIdx + 1) % 2);
         if (gameOver) {
             return;
         }

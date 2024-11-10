@@ -1,12 +1,7 @@
 Starting audit...
-[ERROR] /home/cuculet/Documents/java/tema0/./src/utils/GameEnded.java:22:30: Parameter gameEnded should be final. [FinalParameters]
-[ERROR] /home/cuculet/Documents/java/tema0/./src/debug/DebugCardAtPosition.java:13: Line is longer than 100 characters (found 101). [LineLength]
-[ERROR] /home/cuculet/Documents/java/tema0/./src/players/Player.java:88:41: 'mana' hides a field. [HiddenField]
+[ERROR] /home/cuculet/Documents/java/tema0/./src/utils/GameConstants.java:46: Line is longer than 100 characters (found 102). [LineLength]
+[ERROR] /home/cuculet/Documents/java/tema0/./src/action/CommandAction.java:8:17: Name 'errorManager' must match pattern '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'. [ConstantName]
 [ERROR] /home/cuculet/Documents/java/tema0/./src/fileio/Coordinates.java:9:24: Parameter x should be final. [FinalParameters]
 [ERROR] /home/cuculet/Documents/java/tema0/./src/fileio/Coordinates.java:9:31: Parameter y should be final. [FinalParameters]
-[ERROR] /home/cuculet/Documents/java/tema0/./src/cards/TheRipper.java:19:5: Class 'TheRipper' looks like designed for extension (can be subclassed), but the method 'isTank' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'TheRipper' final or making the method 'isTank' static/final/abstract/empty, or adding allowed annotation for the method. [DesignForExtension]
-[ERROR] /home/cuculet/Documents/java/tema0/./src/cards/TheRipper.java:24:5: Class 'TheRipper' looks like designed for extension (can be subclassed), but the method 'useAbility' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'TheRipper' final or making the method 'useAbility' static/final/abstract/empty, or adding allowed annotation for the method. [DesignForExtension]
-[ERROR] /home/cuculet/Documents/java/tema0/./src/game/Game.java:108:39: 'player' hides a field. [HiddenField]
-[ERROR] /home/cuculet/Documents/java/tema0/./src/game/Game.java:108:57: 'playerIdxTurn' hides a field. [HiddenField]
 Audit done.
-Checkstyle ends with 9 errors.
+Checkstyle ends with 4 errors.

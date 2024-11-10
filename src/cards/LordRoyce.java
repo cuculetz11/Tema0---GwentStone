@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class LordRoyce extends Hero {
     public LordRoyce(final CardInput input) {
         CardManager.fromInputToObject(this, input);
-        this.setHealth(GameConstants.MAXHEALTHHERO);
+        this.setHealth(GameConstants.MAX_HEALTH_HERO);
 
     }
     /**

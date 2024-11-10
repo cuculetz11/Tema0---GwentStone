@@ -83,13 +83,13 @@ public class Player {
 
     /**
      * Creste mana jucatorului cu o anumita valoare
-     * @param mana valoarea cu care se va creste mana
+     * @param addTomana valoarea cu care se va creste mana
      */
-    public void incrementMana(final int mana) {
-        if (mana > GameConstants.MAXMANA) {
-            this.mana = this.mana + GameConstants.MAXMANA;
+    public void incrementMana(final int addTomana) {
+        if (addTomana > GameConstants.MAX_MANA) {
+            this.mana = this.mana + GameConstants.MAX_MANA;
         } else {
-            this.mana = mana + this.mana;
+            this.mana = addTomana + this.mana;
         }
     }
 
@@ -98,7 +98,7 @@ public class Player {
      * @param playerIdx indexul jucatorului care a castigat
      */
     public void wins(final int playerIdx) {
-        GameEnded gameEnded = new GameEnded(GameConstants.PLAYERWINS[playerIdx]);
+        GameEnded gameEnded = new GameEnded(GameConstants.PLAYER_WINS[playerIdx]);
         JsonOutManager.getInstance().addToOutput(gameEnded);
     }
 }

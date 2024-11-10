@@ -19,7 +19,7 @@ public class GameEnded {
      * Seteaza rezultatul jocului
      * @param gameEnded rezultatul jocului
      */
-    public void setGameEnded(String gameEnded) {
+    public void setGameEnded(final String gameEnded) {
         this.gameEnded = gameEnded;
     }
 }

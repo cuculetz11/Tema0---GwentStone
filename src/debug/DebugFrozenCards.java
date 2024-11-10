@@ -19,7 +19,7 @@ public class DebugFrozenCards {
 
     /**
      * Obtine numele comenzii
-     * @return
+     * @return numele comenzii
      */
     public String getCommand() {
         return command;
@@ -27,7 +27,7 @@ public class DebugFrozenCards {
 
     /**
      * Seteaza numele comenzii
-     * @param command
+     * @param command numele comenzii
      */
     public void setCommand(final String command) {
         this.command = command;
@@ -35,7 +35,7 @@ public class DebugFrozenCards {
 
     /**
      * Obtine lista de carti inghetate
-     * @return
+     * @return cartile inghetate
      */
     public ArrayList<MinionDTO> getOutput() {
         return output;
@@ -43,7 +43,7 @@ public class DebugFrozenCards {
 
     /**
      * Seteaza lista de carti inghetate
-     * @param output
+     * @param output reprezinta cartile inghetate
      */
     public void setOutput(final ArrayList<MinionDTO> output) {
         this.output = output;

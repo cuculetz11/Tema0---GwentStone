@@ -9,7 +9,7 @@ import utils.CardManager;
 public class Miraj extends Minion {
     /**
      *
-     * @param input
+     * @param input car
      */
     public Miraj(final CardInput input) {
         CardManager.fromInputToObject(this, input);

@@ -6,7 +6,11 @@ import utils.GameConstants;
 
 import java.util.ArrayList;
 
-
+/**
+ * Clasa GameTable este un singleton ce reprezinta masa de joc pe tot parcursul aplicatiei
+ * Am facut o singleton deoarece am vrut sa am acces la ea de oriunde si pe intreaga durata a
+ * aplicatiei
+ */
 public final class GameTable {
     private static GameTable instance;
 
@@ -95,7 +99,7 @@ public final class GameTable {
                 return null;
             }
         }
-        if (x == GameConstants.LASTROW) {
+        if (x == GameConstants.LAST_ROW) {
             if (y < playerBackRow[0].size()) {
                 return playerBackRow[0].get(y);
             } else {
@@ -112,7 +116,7 @@ public final class GameTable {
      */
     public ArrayList<Minion> getRowFromTable(final int x, final int playerIdx) {
         if (playerIdx == 0) {
-            if (x == GameConstants.LASTROW) {
+            if (x == GameConstants.LAST_ROW) {
                 return playerBackRow[0];
             }
             if (x == 2) {

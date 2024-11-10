@@ -42,7 +42,7 @@ public abstract class Card {
 
     /**
      * Seteaza daca cartea a fost folosita sau nu
-     * @param wasUsed
+     * @param wasUsed - un boolean ce ne spune daca cartea a fost folosita
      */
     public void setWasUsed(final boolean wasUsed) {
         this.wasUsed = wasUsed;

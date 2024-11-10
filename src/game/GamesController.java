@@ -3,7 +3,9 @@ package game;
 import fileio.GameInput;
 import fileio.Input;
 
-
+/**
+ * Aceasta clasa ia cate un joc pe rand si-l desfasoara
+ */
 public final class GamesController {
     private static GamesController instance;
     private int numberGames;

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class KingMudface extends Hero {
     public KingMudface(final CardInput input) {
         CardManager.fromInputToObject(this, input);
-        this.setHealth(GameConstants.MAXHEALTHHERO);
+        this.setHealth(GameConstants.MAX_HEALTH_HERO);
     }
     /**
      * Aceasta metoda este suprascrisa de fiecare carte in parte

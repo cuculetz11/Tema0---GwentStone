@@ -10,7 +10,8 @@ public class DebugCardAtPosition {
     private int y;
     private MinionDTO output;
 
-    public DebugCardAtPosition(final String command, final int x, final int y, final Minion output) {
+    public DebugCardAtPosition(final String command, final int x, final int y,
+                               final Minion output) {
         this.command = command;
         this.x = x;
         this.y = y;

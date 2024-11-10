@@ -15,7 +15,7 @@ public class ErrorCardAttack extends Error {
 
     /**
      * Obtine coordonatele atacatorului
-     * @return
+     * @return coordonatele atacatorului
      */
     public Coordinates getCardAttacker() {
         return cardAttacker;
@@ -23,7 +23,7 @@ public class ErrorCardAttack extends Error {
 
     /**
      * Seteaza coordonatele atacatorului
-     * @param cardAttacker
+     * @param cardAttacker seteaza coordonatele atacatorului
      */
     public void setCardAttacker(final Coordinates cardAttacker) {
         this.cardAttacker = cardAttacker;
@@ -31,7 +31,7 @@ public class ErrorCardAttack extends Error {
 
     /**
      * Obtine coordonatele celui atacat
-     * @return
+     * @return coordonatele celui atacat
      */
     public Coordinates getCardAttacked() {
         return cardAttacked;
@@ -39,7 +39,7 @@ public class ErrorCardAttack extends Error {
 
     /**
      * Seteaza coordonatele celui atacat
-     * @param cardAttacked
+     * @param cardAttacked reprezinta coordonatele celui atacat
      */
     public void setCardAttacked(final Coordinates cardAttacked) {
         this.cardAttacked = cardAttacked;

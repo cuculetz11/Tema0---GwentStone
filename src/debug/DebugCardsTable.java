@@ -12,7 +12,7 @@ public class DebugCardsTable {
 
     public DebugCardsTable(final String command, final ArrayList<Minion>[] output) {
         this.command = command;
-        this.output = new ArrayList[GameConstants.MAXROWSIZE];
+        this.output = new ArrayList[GameConstants.MAX_ROW_SIZE];
         for (int i = 0; i < output.length; i++) {
             this.output[i] = new ArrayList<>();
             for (Minion m : output[i]) {
@@ -23,7 +23,7 @@ public class DebugCardsTable {
 
     /**
      * Obtine numele comenzii
-     * @return
+     * @return numele comenzii
      */
     public String getCommand() {
         return command;
@@ -31,7 +31,7 @@ public class DebugCardsTable {
 
     /**
      * Seteaza numele comenzii
-     * @param command
+     * @param command este numele coemzii
      */
     public void setCommand(final String command) {
         this.command = command;
@@ -39,7 +39,7 @@ public class DebugCardsTable {
 
     /**
      * Obtine lista de vectori de cartii ce se afla pe masa
-     * @return
+     * @return setul de minioni de pe masa
      */
     public ArrayList<MinionDTO>[] getOutput() {
         return output;
@@ -47,7 +47,7 @@ public class DebugCardsTable {
 
     /**
      * Seteaza lista de vectori de carti de pe masa
-     * @param output
+     * @param output reprezinta minionii de pe masa
      */
     public void setOutput(final ArrayList<MinionDTO>[] output) {
         this.output = output;

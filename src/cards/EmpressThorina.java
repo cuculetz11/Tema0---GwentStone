@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class EmpressThorina extends Hero {
     public EmpressThorina(final CardInput input) {
         CardManager.fromInputToObject(this, input);
-        this.setHealth(GameConstants.MAXHEALTHHERO);
+        this.setHealth(GameConstants.MAX_HEALTH_HERO);
     }
     /**
      * Aceasta metoda este suprascrisa de fiecare carte in parte

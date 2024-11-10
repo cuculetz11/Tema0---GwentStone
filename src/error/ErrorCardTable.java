@@ -11,7 +11,7 @@ public class ErrorCardTable extends Error {
 
     /**
      * Obtine indexul cartii din mana
-     * @return
+     * @return indexul cartii din mana
      */
     public int getHandIdx() {
         return handIdx;
@@ -19,7 +19,7 @@ public class ErrorCardTable extends Error {
 
     /**
      * Seteaza indexul cartii din mana
-     * @param handIdx
+     * @param handIdx reprezinta indexul cartii din mana
      */
     public void setHandIdx(final int handIdx) {
         this.handIdx = handIdx;

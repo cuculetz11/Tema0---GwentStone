@@ -22,7 +22,7 @@ public class ErrorManger {
     public boolean isEnemyCard(final int playerIdx, final int attackedRowIdx) {
         return (playerIdx == 0 && (attackedRowIdx == 0 || attackedRowIdx == 1))
                 || (playerIdx == 1 && (attackedRowIdx == 2 || attackedRowIdx
-                == GameConstants.LASTROW));
+                == GameConstants.LAST_ROW));
     }
     /**
      * Gestioneaza erorile legate de abilitatea unui card (Minion) atacator
@@ -33,14 +33,14 @@ public class ErrorManger {
      */
     public boolean handleCardAbilityError(final Minion attacker, final ActionsInput action) {
         if (attacker.isFrozen()) {
-            ErrorCardAttack stats = new ErrorCardAttack(GameConstants.CARDUSESABILITY,
+            ErrorCardAttack stats = new ErrorCardAttack(GameConstants.CARD_USES_ABILITY,
                     GameConstants.FROZEN, action.getCardAttacker(), action.getCardAttacked());
             JsonOutManager.getInstance().addToOutput(stats);
             return true;
         }
         if (attacker.isWasUsed()) {
-            ErrorCardAttack stats = new ErrorCardAttack(GameConstants.CARDUSESABILITY,
-                    GameConstants.ALREADYATTACKED, action.getCardAttacker(),
+            ErrorCardAttack stats = new ErrorCardAttack(GameConstants.CARD_USES_ABILITY,
+                    GameConstants.ALREADY_ATTACKED, action.getCardAttacker(),
                     action.getCardAttacked());
             JsonOutManager.getInstance().addToOutput(stats);
             return true;
@@ -58,14 +58,14 @@ public class ErrorManger {
     public boolean handleHeroAbilityError(final Hero hero, final int mana,
                                           final ActionsInput action) {
         if (hero.getMana() > mana) {
-            ErrorHeroAbility err = new ErrorHeroAbility(GameConstants.NOTENOUGHMANAHERO,
-                    GameConstants.USEHEROABILITY, action.getAffectedRow());
+            ErrorHeroAbility err = new ErrorHeroAbility(GameConstants.NOT_ENOUGH_MANA_HERO,
+                    GameConstants.USE_HERO_ABILITY, action.getAffectedRow());
             JsonOutManager.getInstance().addToOutput(err);
             return true;
         }
         if (hero.isWasUsed()) {
-            ErrorHeroAbility err = new ErrorHeroAbility(GameConstants.ALREADYATTACKEDHERO,
-                    GameConstants.USEHEROABILITY, action.getAffectedRow());
+            ErrorHeroAbility err = new ErrorHeroAbility(GameConstants.ALREADY_ATTACKED_HERO,
+                    GameConstants.USE_HERO_ABILITY, action.getAffectedRow());
             JsonOutManager.getInstance().addToOutput(err);
             return true;
         }
@@ -83,20 +83,20 @@ public class ErrorManger {
                                          final int enemyIdx) {
         if (attacker.isFrozen()) {
             ErrorAttackHero err = new ErrorAttackHero(GameConstants.FROZEN,
-                    GameConstants.USEATTACKHERO, action.getCardAttacker());
+                    GameConstants.USE_ATTACK_HERO, action.getCardAttacker());
             JsonOutManager.getInstance().addToOutput(err);
             return true;
         }
         if (attacker.isWasUsed()) {
-            ErrorAttackHero err = new ErrorAttackHero(GameConstants.ALREADYATTACKED,
-                    GameConstants.USEATTACKHERO, action.getCardAttacker());
+            ErrorAttackHero err = new ErrorAttackHero(GameConstants.ALREADY_ATTACKED,
+                    GameConstants.USE_ATTACK_HERO, action.getCardAttacker());
             JsonOutManager.getInstance().addToOutput(err);
             return true;
         }
 
         if (GameTable.getInstance().isThereATank(enemyIdx)) {
-            ErrorAttackHero err = new ErrorAttackHero(GameConstants.NOTTANK,
-                    GameConstants.USEATTACKHERO, action.getCardAttacker());
+            ErrorAttackHero err = new ErrorAttackHero(GameConstants.NOT_TANK,
+                    GameConstants.USE_ATTACK_HERO, action.getCardAttacker());
             JsonOutManager.getInstance().addToOutput(err);
             return true;
         }
@@ -114,8 +114,8 @@ public class ErrorManger {
     public boolean handleSelfCardAttack(final int playerIdx, final int attackedRowIdx,
                                         final ActionsInput action) {
         if (!isEnemyCard(playerIdx, attackedRowIdx)) {
-            ErrorCardAttack stats = new ErrorCardAttack(GameConstants.CARDUSESATTACK,
-                    GameConstants.NOTBELONGTOENEMY, action.getCardAttacker(),
+            ErrorCardAttack stats = new ErrorCardAttack(GameConstants.CARD_USES_ATTACK,
+                    GameConstants.NOT_BELONG_TO_ENEMY, action.getCardAttacker(),
                     action.getCardAttacked());
             JsonOutManager.getInstance().addToOutput(stats);
             return true;
@@ -134,14 +134,14 @@ public class ErrorManger {
     public boolean handleCardAttackError(final Minion attacker, final Minion attacked,
                                          final ActionsInput action, final boolean areThereTanks) {
         if (attacker.isWasUsed()) {
-            ErrorCardAttack stats = new ErrorCardAttack(GameConstants.CARDUSESATTACK,
-                    GameConstants.ALREADYATTACKED, action.getCardAttacker(),
+            ErrorCardAttack stats = new ErrorCardAttack(GameConstants.CARD_USES_ATTACK,
+                    GameConstants.ALREADY_ATTACKED, action.getCardAttacker(),
                     action.getCardAttacked());
             JsonOutManager.getInstance().addToOutput(stats);
             return true;
         }
         if (attacker.isFrozen()) {
-            ErrorCardAttack stats = new ErrorCardAttack(GameConstants.CARDUSESATTACK,
+            ErrorCardAttack stats = new ErrorCardAttack(GameConstants.CARD_USES_ATTACK,
                     GameConstants.FROZEN, action.getCardAttacker(),
                     action.getCardAttacked());
             JsonOutManager.getInstance().addToOutput(stats);
@@ -149,8 +149,8 @@ public class ErrorManger {
         }
 
         if (!attacked.isTank() && areThereTanks) {
-            ErrorCardAttack stats = new ErrorCardAttack(GameConstants.CARDUSESATTACK,
-                    GameConstants.NOTTANK, action.getCardAttacker(), action.getCardAttacked());
+            ErrorCardAttack stats = new ErrorCardAttack(GameConstants.CARD_USES_ATTACK,
+                    GameConstants.NOT_TANK, action.getCardAttacker(), action.getCardAttacked());
             JsonOutManager.getInstance().addToOutput(stats);
             return true;
         }
@@ -168,24 +168,24 @@ public class ErrorManger {
     public boolean handlePlaceCardError(final Player p, final Minion m, final int handIdx,
                                         final int playerIdx) {
         if (p.getMana() < m.getMana()) {
-            ErrorCardTable stats = new ErrorCardTable(GameConstants.PLACECARD, handIdx,
-                    GameConstants.NOTENOUGHMANATABLE);
+            ErrorCardTable stats = new ErrorCardTable(GameConstants.PLACE_CARD, handIdx,
+                    GameConstants.NOT_ENOUGH_MANA_TABLE);
             JsonOutManager.getInstance().addToOutput(stats);
             return true;
         }
         if (m.isFront()) {
             if (GameTable.getInstance().getPlayerFrontRow()[playerIdx].size()
-                    >= GameConstants.MAXCOLUMNSIZE) {
-                ErrorCardTable stats = new ErrorCardTable(GameConstants.PLACECARD, handIdx,
-                        GameConstants.FULLTABLE);
+                    >= GameConstants.MAX_COLUMN_SIZE) {
+                ErrorCardTable stats = new ErrorCardTable(GameConstants.PLACE_CARD, handIdx,
+                        GameConstants.FULL_TABLE);
                 JsonOutManager.getInstance().addToOutput(stats);
                 return true;
             }
         } else {
             if (GameTable.getInstance().getPlayerBackRow()[playerIdx].size()
-                    >= GameConstants.MAXCOLUMNSIZE) {
-                ErrorCardTable stats = new ErrorCardTable(GameConstants.PLACECARD, handIdx,
-                        GameConstants.FULLTABLE);
+                    >= GameConstants.MAX_COLUMN_SIZE) {
+                ErrorCardTable stats = new ErrorCardTable(GameConstants.PLACE_CARD, handIdx,
+                        GameConstants.FULL_TABLE);
                 JsonOutManager.getInstance().addToOutput(stats);
                 return true;
             }
@@ -205,15 +205,15 @@ public class ErrorManger {
     public boolean handleCardAbilityTankSelf(final ActionsInput action, final int playerIdx,
                                              final Minion attacked) {
         if (!isEnemyCard(playerIdx, action.getCardAttacked().getX())) {
-            ErrorCardAttack stats = new ErrorCardAttack(GameConstants.CARDUSESABILITY,
-                    GameConstants.NOTBELONGTOENEMY, action.getCardAttacker(),
+            ErrorCardAttack stats = new ErrorCardAttack(GameConstants.CARD_USES_ABILITY,
+                    GameConstants.NOT_BELONG_TO_ENEMY, action.getCardAttacker(),
                     action.getCardAttacked());
             JsonOutManager.getInstance().addToOutput(stats);
             return true;
         }
         if (!attacked.isTank() && GameTable.getInstance().isThereATank((playerIdx + 1) % 2)) {
-            ErrorCardAttack err = new ErrorCardAttack(GameConstants.CARDUSESABILITY,
-                    GameConstants.NOTTANK, action.getCardAttacker(), action.getCardAttacked());
+            ErrorCardAttack err = new ErrorCardAttack(GameConstants.CARD_USES_ABILITY,
+                    GameConstants.NOT_TANK, action.getCardAttacker(), action.getCardAttacked());
             JsonOutManager.getInstance().addToOutput(err);
             return true;
         }
@@ -228,8 +228,8 @@ public class ErrorManger {
      */
     public boolean handleCardAbilityEnemyCheck(final int playerIdx, final ActionsInput action) {
         if (isEnemyCard(playerIdx, action.getCardAttacked().getX())) {
-            ErrorCardAttack stats = new ErrorCardAttack(GameConstants.CARDUSESABILITY,
-                    GameConstants.NOTBELONGTOCURRENT, action.getCardAttacker(),
+            ErrorCardAttack stats = new ErrorCardAttack(GameConstants.CARD_USES_ABILITY,
+                    GameConstants.NOT_BELONG_TO_CURRENT, action.getCardAttacker(),
                     action.getCardAttacked());
             JsonOutManager.getInstance().addToOutput(stats);
             return true;
@@ -245,8 +245,8 @@ public class ErrorManger {
      */
     public boolean handleSelfAbilityHero(final ActionsInput action, final int playerIdx) {
         if (!isEnemyCard(playerIdx, action.getAffectedRow())) {
-            ErrorHeroAbility err = new ErrorHeroAbility(GameConstants.ROWNOTBELONGTOENEMY,
-                    GameConstants.USEHEROABILITY, action.getAffectedRow());
+            ErrorHeroAbility err = new ErrorHeroAbility(GameConstants.ROW_NOT_BELONG_TO_ENEMY,
+                    GameConstants.USE_HERO_ABILITY, action.getAffectedRow());
             JsonOutManager.getInstance().addToOutput(err);
             return true;
         }
@@ -261,8 +261,8 @@ public class ErrorManger {
      */
     public boolean handleAbilityHeroEnemyCheck(final ActionsInput action, final int playerIdx) {
         if (isEnemyCard(playerIdx, action.getAffectedRow())) {
-            ErrorHeroAbility err = new ErrorHeroAbility(GameConstants.ROWNOTBELONGTOCURRENT,
-                    GameConstants.USEHEROABILITY, action.getAffectedRow());
+            ErrorHeroAbility err = new ErrorHeroAbility(GameConstants.ROW_NOT_BELONG_TO_CURRENT,
+                    GameConstants.USE_HERO_ABILITY, action.getAffectedRow());
             JsonOutManager.getInstance().addToOutput(err);
             return true;
         }

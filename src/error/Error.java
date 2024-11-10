@@ -11,7 +11,7 @@ public abstract class Error {
 
     /**
      * Obtine numele erorii
-     * @return
+     * @return numele erorii
      */
     public String getError() {
         return error;
@@ -19,7 +19,7 @@ public abstract class Error {
 
     /**
      * Seteaza numele erorii
-     * @param error
+     * @param error numele erorii
      */
     public void setError(final String error) {
         this.error = error;
@@ -27,7 +27,7 @@ public abstract class Error {
 
     /**
      * Obtine numele comenzii unde s-a pertecut eroarea
-     * @return
+     * @return numele comenzii unde a avut loc eroarea
      */
     public String getCommand() {
         return command;
@@ -35,7 +35,7 @@ public abstract class Error {
 
     /**
      * Seteaza numele comenzii
-     * @param command
+     * @param command numele coemnzii unde a avut loc eroarea
      */
     public void setCommand(final String command) {
         this.command = command;

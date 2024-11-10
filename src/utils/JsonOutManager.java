@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 
 /**
  * Clasa JsonOutManager este un singleton care gestioneaza un ArrayNode pentru a stoca output-ul
+ * Am facut acest luctru pentru a nu pasa output-ul ca parametru oriunde aveam nevoie
  */
 public final class JsonOutManager {
     private static JsonOutManager instance = null;
